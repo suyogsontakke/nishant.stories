@@ -7,14 +7,16 @@
   <style>
     /* CSS Variables & Global Reset */
     :root {
-      --bg-dark: #09090b;
-      --card-bg: #18181b;
-      --card-border: #27272a;
+      --bg-dark: #070709;
+      --card-bg: rgba(24, 24, 27, 0.65);
+      --card-border: rgba(255, 255, 255, 0.1);
       --accent: #f43f5e;
+      --accent-purple: #a855f7;
       --accent-gradient: linear-gradient(135deg, #f43f5e, #a855f7);
+      --accent-glow: rgba(244, 63, 94, 0.35);
       --text-main: #f4f4f5;
       --text-muted: #a1a1aa;
-      --font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      --font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     }
 
     * {
@@ -32,6 +34,38 @@
       color: var(--text-main);
       font-family: var(--font-family);
       line-height: 1.6;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Ambient 3D Background Glow Spheres */
+    .bg-glow {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(120px);
+      z-index: -1;
+      opacity: 0.45;
+      pointer-events: none;
+      animation: float 12s infinite alternate ease-in-out;
+    }
+    .bg-glow-1 {
+      top: -10%;
+      left: -10%;
+      width: 350px;
+      height: 350px;
+      background: var(--accent);
+    }
+    .bg-glow-2 {
+      bottom: 20%;
+      right: -10%;
+      width: 400px;
+      height: 400px;
+      background: var(--accent-purple);
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0) scale(1); }
+      100% { transform: translateY(40px) scale(1.1); }
     }
 
     a {
@@ -44,8 +78,9 @@
       position: fixed;
       top: 0;
       width: 100%;
-      background: rgba(9, 9, 11, 0.85);
-      backdrop-filter: blur(12px);
+      background: rgba(7, 7, 9, 0.75);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
       border-bottom: 1px solid var(--card-border);
       z-index: 1000;
     }
@@ -56,7 +91,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 1rem 1.5rem;
+      padding: 1rem 1.25rem;
     }
 
     .logo {
@@ -70,50 +105,144 @@
       color: var(--accent);
     }
 
+    /* Desktop Navigation */
     .nav-links {
-      display: flex;
-      gap: 1.5rem;
+      display: none;
+      gap: 1.75rem;
       list-style: none;
       font-size: 0.9rem;
       color: var(--text-muted);
+    }
+
+    .nav-links a {
+      transition: color 0.2s;
     }
 
     .nav-links a:hover {
       color: var(--text-main);
     }
 
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
     .btn-ig {
       background: var(--accent-gradient);
-      padding: 0.5rem 1rem;
+      padding: 0.55rem 1.1rem;
       border-radius: 9999px;
       font-size: 0.8rem;
       font-weight: 600;
-      transition: opacity 0.2s;
+      box-shadow: 0 4px 15px var(--accent-glow);
+      transition: transform 0.2s, box-shadow 0.2s;
+      display: inline-block;
     }
 
-    .btn-ig:hover {
-      opacity: 0.9;
+    .btn-ig:active {
+      transform: scale(0.95);
     }
 
-    /* Layout Container */
+    /* Mobile Hamburger Menu Toggle */
+    .menu-toggle {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 5px;
+      z-index: 1001;
+    }
+
+    .menu-toggle span {
+      width: 24px;
+      height: 2px;
+      background: var(--text-main);
+      border-radius: 2px;
+      transition: transform 0.3s, opacity 0.3s;
+    }
+
+    .menu-toggle.active span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .menu-toggle.active span:nth-child(2) { opacity: 0; }
+    .menu-toggle.active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    /* Mobile Drawer */
+    .mobile-drawer {
+      position: fixed;
+      top: 0;
+      right: -100%;
+      width: 75%;
+      max-width: 300px;
+      height: 100vh;
+      background: rgba(15, 15, 18, 0.95);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-left: 1px solid var(--card-border);
+      padding: 6rem 2rem 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      z-index: 999;
+    }
+
+    .mobile-drawer.open {
+      right: 0;
+    }
+
+    .mobile-drawer a {
+      font-size: 1.1rem;
+      font-weight: 500;
+      color: var(--text-muted);
+    }
+
+    .mobile-drawer a:hover {
+      color: var(--text-main);
+    }
+
+    @media (min-width: 768px) {
+      .nav-links { display: flex; }
+      .menu-toggle { display: none; }
+    }
+
+    /* Container */
     .container {
       max-width: 1100px;
       margin: 0 auto;
-      padding: 0 1.5rem;
+      padding: 0 1.25rem;
+    }
+
+    /* 3D Tilt Card Base Setup */
+    .tilt-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 1rem;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
+      transform-style: preserve-3d;
+      perspective: 1000px;
+      will-change: transform;
+    }
+
+    .tilt-card:hover {
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5), 0 0 20px rgba(244, 63, 94, 0.15);
     }
 
     /* Hero Section */
     .hero {
-      padding: 8rem 0 5rem;
+      padding: 7rem 0 4rem;
       display: flex;
       flex-direction: column;
-      gap: 3rem;
+      gap: 2.5rem;
     }
 
     @media (min-width: 768px) {
       .hero {
         flex-direction: row;
         align-items: center;
+        padding: 9rem 0 5rem;
       }
     }
 
@@ -123,22 +252,23 @@
 
     .badge {
       display: inline-block;
-      background: rgba(244, 63, 94, 0.1);
-      border: 1px solid rgba(244, 63, 94, 0.3);
+      background: rgba(244, 63, 94, 0.12);
+      border: 1px solid rgba(244, 63, 94, 0.35);
       color: var(--accent);
       font-size: 0.75rem;
-      font-weight: 600;
-      padding: 0.25rem 0.75rem;
+      font-weight: 700;
+      padding: 0.35rem 0.85rem;
       border-radius: 9999px;
       text-transform: uppercase;
       letter-spacing: 1px;
       margin-bottom: 1.25rem;
+      box-shadow: 0 0 12px rgba(244, 63, 94, 0.2);
     }
 
     .hero-content h1 {
-      font-size: 2.5rem;
+      font-size: 2.2rem;
       font-weight: 800;
-      line-height: 1.15;
+      line-height: 1.2;
       margin-bottom: 1rem;
     }
 
@@ -154,7 +284,7 @@
 
     .hero-content p {
       color: var(--text-muted);
-      font-size: 1rem;
+      font-size: 0.95rem;
       margin-bottom: 2rem;
       max-width: 550px;
     }
@@ -162,40 +292,60 @@
     .stats-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 1rem;
+      gap: 0.75rem;
       border-top: 1px solid var(--card-border);
       padding-top: 1.5rem;
     }
 
+    .stat-box {
+      text-align: center;
+      padding: 0.75rem;
+      background: rgba(255, 255, 255, 0.02);
+      border-radius: 0.75rem;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
     .stat-number {
-      font-size: 1.5rem;
-      font-weight: 700;
+      font-size: 1.35rem;
+      font-weight: 800;
       color: var(--text-main);
     }
 
     .stat-label {
-      font-size: 0.75rem;
+      font-size: 0.7rem;
       color: var(--text-muted);
+      margin-top: 0.2rem;
     }
 
+    /* Hero 3D Avatar Frame */
     .hero-image-wrapper {
       width: 100%;
-      max-width: 320px;
+      max-width: 300px;
       margin: 0 auto;
+      perspective: 1000px;
+    }
+
+    .hero-image-card {
+      position: relative;
+      border-radius: 1.25rem;
+      padding: 8px;
+      background: linear-gradient(145deg, rgba(255, 255, 255, 0.15), rgba(0, 0, 0, 0.4));
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+      transform-style: preserve-3d;
+      transition: transform 0.3s ease-out;
     }
 
     .hero-image {
       width: 100%;
-      height: 380px;
+      height: 360px;
       object-fit: cover;
       border-radius: 1rem;
-      border: 1px solid var(--card-border);
-      background: var(--card-bg);
+      display: block;
     }
 
     /* Section Header */
     .section-header {
-      margin-bottom: 2.5rem;
+      margin-bottom: 2rem;
     }
 
     .section-subtitle {
@@ -207,27 +357,26 @@
     }
 
     .section-title {
-      font-size: 1.8rem;
+      font-size: 1.75rem;
       font-weight: 700;
       margin-top: 0.25rem;
     }
 
-    /* Section Wrappers */
     section {
-      padding: 5rem 0;
+      padding: 4rem 0;
     }
 
     .section-alt {
-      background: rgba(24, 24, 27, 0.4);
-      border-top: 1px solid rgba(39, 39, 42, 0.6);
-      border-bottom: 1px solid rgba(39, 39, 42, 0.6);
+      background: rgba(12, 12, 15, 0.6);
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
     }
 
-    /* Video Projects Section - 2 Columns */
+    /* Video Projects Grid */
     .video-grid {
       display: grid;
       grid-template-columns: 1fr;
-      gap: 2rem;
+      gap: 1.75rem;
     }
 
     @media (min-width: 768px) {
@@ -237,15 +386,11 @@
     }
 
     .video-card {
-      background: var(--card-bg);
-      border: 1px solid var(--card-border);
-      border-radius: 0.75rem;
       overflow: hidden;
       display: flex;
       flex-direction: column;
     }
 
-    /* Landscape Container for Video 1 */
     .video-container-landscape {
       position: relative;
       width: 100%;
@@ -253,29 +398,29 @@
       background: #000;
     }
 
-    /* Portrait Container for Video 2 */
     .video-container-portrait {
       position: relative;
       width: 100%;
       aspect-ratio: 9 / 16;
+      max-height: 480px;
       background: #000;
     }
 
-    .video-card video {
+    .clean-video {
       width: 100%;
       height: 100%;
       object-fit: cover;
+      pointer-events: none; /* Prevents touch interruptions on mobile */
     }
 
     .video-details {
-      padding: 1rem;
-      background: var(--card-bg);
+      padding: 1.2rem;
     }
 
     .video-title {
       font-size: 0.95rem;
       font-weight: 600;
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.75rem;
     }
 
     .video-metrics {
@@ -284,16 +429,33 @@
       font-size: 0.75rem;
       color: var(--text-muted);
       border-top: 1px solid var(--card-border);
-      padding-top: 0.5rem;
-      margin-top: 0.5rem;
+      padding-top: 0.6rem;
     }
 
     .metric-value {
       color: var(--text-main);
-      font-weight: 600;
+      font-weight: 700;
     }
 
     /* Workflow Cards */
+    .workflow-media-container {
+      width: 100%;
+      margin-bottom: 2rem;
+      border-radius: 1rem;
+      overflow: hidden;
+      border: 1px solid var(--card-border);
+      background: var(--card-bg);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+    }
+
+    .workflow-image {
+      width: 100%;
+      height: auto;
+      max-height: 420px;
+      object-fit: cover;
+      display: block;
+    }
+
     .workflow-grid {
       display: grid;
       grid-template-columns: 1fr;
@@ -309,53 +471,33 @@
     }
 
     .workflow-card {
-      background: var(--card-bg);
-      border: 1px solid var(--card-border);
       padding: 1.5rem;
-      border-radius: 0.75rem;
     }
 
     .workflow-step {
       font-family: monospace;
       font-size: 1.5rem;
-      font-weight: 700;
+      font-weight: 800;
       color: var(--accent);
       margin-bottom: 0.5rem;
+      text-shadow: 0 0 10px var(--accent-glow);
     }
 
     .workflow-card h3 {
-      font-size: 1.1rem;
-      margin-bottom: 0.5rem;
+      font-size: 1.05rem;
+      margin-bottom: 0.4rem;
     }
 
     .workflow-card p {
-      font-size: 0.8rem;
+      font-size: 0.825rem;
       color: var(--text-muted);
     }
-
-    /* Workflow Media Container Styles */
-.workflow-media-container {
-  width: 100%;
-  margin-bottom: 2rem;
-  border-radius: 0.75rem;
-  overflow: hidden;
-  border: 1px solid var(--card-border);
-  background: var(--card-bg);
-}
-
-.workflow-image {
-  width: 100%;
-  height: auto;
-  max-height: 450px;
-  object-fit: cover;
-  display: block;
-}
 
     /* PR Fit Cards */
     .fit-grid {
       display: grid;
       grid-template-columns: 1fr;
-      gap: 1.5rem;
+      gap: 1.25rem;
     }
 
     @media (min-width: 768px) {
@@ -363,14 +505,11 @@
     }
 
     .fit-card {
-      background: var(--card-bg);
-      border: 1px solid var(--card-border);
       padding: 1.5rem;
-      border-radius: 0.75rem;
     }
 
     .fit-card h3 {
-      font-size: 1.1rem;
+      font-size: 1.05rem;
       color: var(--text-main);
       margin-bottom: 0.5rem;
     }
@@ -383,15 +522,16 @@
     /* Quote Banner */
     .quote-box {
       margin-top: 3rem;
-      background: linear-gradient(135deg, rgba(244, 63, 94, 0.1), rgba(24, 24, 27, 0.9));
-      border: 1px solid rgba(244, 63, 94, 0.2);
-      padding: 2.5rem 1.5rem;
-      border-radius: 1rem;
+      background: linear-gradient(135deg, rgba(244, 63, 94, 0.12), rgba(24, 24, 27, 0.8));
+      border: 1px solid rgba(244, 63, 94, 0.25);
+      padding: 2rem 1.5rem;
+      border-radius: 1.25rem;
       text-align: center;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
     }
 
     .quote-box blockquote {
-      font-size: 1.1rem;
+      font-size: 1rem;
       font-style: italic;
       color: var(--text-main);
     }
@@ -399,7 +539,7 @@
     .quote-author {
       margin-top: 1rem;
       font-size: 0.8rem;
-      font-weight: 600;
+      font-weight: 700;
       color: var(--accent);
       text-transform: uppercase;
       letter-spacing: 1px;
@@ -408,7 +548,7 @@
     /* Footer */
     footer {
       border-top: 1px solid var(--card-border);
-      padding: 3rem 0;
+      padding: 2.5rem 0;
       text-align: center;
       font-size: 0.85rem;
       color: var(--text-muted);
@@ -422,19 +562,40 @@
 </head>
 <body>
 
+  <!-- Ambient 3D Glowing Background Spheres -->
+  <div class="bg-glow bg-glow-1"></div>
+  <div class="bg-glow bg-glow-2"></div>
+
   <!-- Navigation -->
   <header>
     <nav>
       <div class="logo">Nishant<span>.Gaikwad</span></div>
+      
       <ul class="nav-links">
         <li><a href="#about">About</a></li>
         <li><a href="#videos">Videos</a></li>
         <li><a href="#workflow">Workflow</a></li>
         <li><a href="#pr-fit">PR Fit</a></li>
       </ul>
-      <a href="https://instagram.com/nishant_stories" target="_blank" class="btn-ig">@nishant_stories</a>
+
+      <div class="nav-right">
+        <a href="https://instagram.com/nishant_stories" target="_blank" class="btn-ig">@nishant_stories</a>
+        <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
     </nav>
   </header>
+
+  <!-- Mobile Drawer -->
+  <div class="mobile-drawer" id="mobileDrawer">
+    <a href="#about" class="drawer-link">About</a>
+    <a href="#videos" class="drawer-link">Videos</a>
+    <a href="#workflow" class="drawer-link">Workflow</a>
+    <a href="#pr-fit" class="drawer-link">PR Fit</a>
+  </div>
 
   <main>
     <!-- Hero Section -->
@@ -450,23 +611,26 @@
         </p>
 
         <div class="stats-grid">
-          <div>
+          <div class="stat-box">
             <div class="stat-number">1.1M+</div>
             <div class="stat-label">30-Day Views</div>
           </div>
-          <div>
+          <div class="stat-box">
             <div class="stat-number">2,390</div>
             <div class="stat-label">Followers</div>
           </div>
-          <div>
+          <div class="stat-box">
             <div class="stat-number">3.67M+</div>
             <div class="stat-label">Peak Reel Views</div>
           </div>
         </div>
       </div>
 
+      <!-- 3D Avatar Image Card -->
       <div class="hero-image-wrapper">
-        <img src="https://instagram.fnag10-1.fna.fbcdn.net/v/t51.82787-15/684845699_18061685186705204_4466235375142625002_n.heic?stp=dst-jpg_e35_tt6&_nc_cat=102&ig_cache_key=Mzg4Njk5ODUwMzQ1NzcxODU0NQ%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkNBUk9VU0VMX0lURU0ueHBpZHMuMTQ0MC5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=gNeqIhdi63gQ7kNvwGeSb-L&_nc_oc=Adp3412LdrPyeODmCI1wFnXNK_w-OD7vGpsFoGoRxjT5tgIb7SMXLO6CxU5gdtZOy4gevqFjyr1MzRnzboDApwAI&_nc_ad=z-m&_nc_cid=1252&_nc_zt=23&_nc_ht=instagram.fnag10-1.fna&_nc_gid=zLOrYJz2CxBvmSnWFkrXUQ&_nc_ss=7a22e&oh=00_AQG4X508X35X-uwUFz1CH4X0e3U2fnAlYOBNd0Te9pWghQ&oe=6A7F4F99" alt="Nishant Gaikwad" class="hero-image">
+        <div class="hero-image-card tilt-card">
+          <img src="https://instagram.fnag10-1.fna.fbcdn.net/v/t51.82787-15/684845699_18061685186705204_4466235375142625002_n.heic?stp=dst-jpg_e35_tt6&_nc_cat=102&ig_cache_key=Mzg4Njk5ODUwMzQ1NzcxODU0NQ%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkNBUk9VU0VMX0lURU0ueHBpZHMuMTQ0MC5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=gNeqIhdi63gQ7kNvwGeSb-L&_nc_oc=Adp3412LdrPyeODmCI1wFnXNK_w-OD7vGpsFoGoRxjT5tgIb7SMXLO6CxU5gdtZOy4gevqFjyr1MzRnzboDApwAI&_nc_ad=z-m&_nc_cid=1252&_nc_zt=23&_nc_ht=instagram.fnag10-1.fna&_nc_gid=zLOrYJz2CxBvmSnWFkrXUQ&_nc_ss=7a22e&oh=00_AQG4X508X35X-uwUFz1CH4X0e3U2fnAlYOBNd0Te9pWghQ&oe=6A7F4F99" alt="Nishant Gaikwad" class="hero-image">
+        </div>
       </div>
     </section>
 
@@ -479,13 +643,13 @@
         </div>
 
         <div class="video-grid">
-          <!-- Video Card 1 (Landscape) -->
-          <div class="video-card">
+          <!-- Video Card 1 -->
+          <div class="video-card tilt-card">
             <div class="video-container-landscape">
-              <video autoplay muted loop playsinline controls poster="...">
-  <source src="video/video1.mp4" type="video/mp4">
-  Your browser does not support the video tag.
-</video>
+              <video class="clean-video" autoplay muted loop playsinline>
+                <source src="video/video1.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+              </video>
             </div>
             <div class="video-details">
               <div class="video-title">Where moments turn into cinema🎬</div>
@@ -496,16 +660,16 @@
             </div>
           </div>
 
-          <!-- Video Card 2 (Portrait) -->
-          <div class="video-card">
+          <!-- Video Card 2 -->
+          <div class="video-card tilt-card">
             <div class="video-container-portrait">
-              <video autoplay muted loop playsinline controls poster="...">
-  <source src="video/video2.mp4" type="video/mp4">
-  Your browser does not support the video tag.
-</video>
+              <video class="clean-video" autoplay muted loop playsinline>
+                <source src="video/video2.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+              </video>
             </div>
             <div class="video-details">
-              <div class="video-title">The Bloodline I Belong..! </div>
+              <div class="video-title">The Bloodline I Belong..!</div>
               <div class="video-metrics">
                 <span>Views: <span class="metric-value">3,672,437</span></span>
                 <span>Likes: <span class="metric-value">301K</span></span>
@@ -517,45 +681,43 @@
     </section>
 
     <!-- Workflow Section -->
-<section id="workflow" class="container">
-  <div class="section-header">
-    <p class="section-subtitle">Editing Process</p>
-    <h2 class="section-title">CapCut Workflow</h2>
-  </div>
+    <section id="workflow" class="container">
+      <div class="section-header">
+        <p class="section-subtitle">Editing Process</p>
+        <h2 class="section-title">CapCut Workflow</h2>
+      </div>
 
-  <!-- CapCut Photo Showcase Container -->
-  <div class="workflow-media-container">
-    <img 
-      src="https://i.postimg.cc/63BYqSZf/Picture1.png" 
-      alt="CapCut Editing Interface Showcase" 
-      class="workflow-image"
-    >
-  </div>
+      <div class="workflow-media-container tilt-card">
+        <img 
+          src="https://i.postimg.cc/63BYqSZf/Picture1.png" 
+          alt="CapCut Editing Interface Showcase" 
+          class="workflow-image"
+        >
+      </div>
 
-  <!-- Workflow Steps Grid -->
-  <div class="workflow-grid">
-    <div class="workflow-card">
-      <div class="workflow-step">01</div>
-      <h3>Select</h3>
-      <p>Choose strong clips and narrative hooks from raw footage.</p>
-    </div>
-    <div class="workflow-card">
-      <div class="workflow-step">02</div>
-      <h3>Structure</h3>
-      <p>Build visual story arcs and pacing tailored for retention.</p>
-    </div>
-    <div class="workflow-card">
-      <div class="workflow-step">03</div>
-      <h3>Polish</h3>
-      <p>Sync trending audio, add dynamic auto-captions, visual effects, and color tuning.</p>
-    </div>
-    <div class="workflow-card">
-      <div class="workflow-step">04</div>
-      <h3>Publish</h3>
-      <p>Export and format specifically for social media performance.</p>
-    </div>
-  </div>
-</section>
+      <div class="workflow-grid">
+        <div class="workflow-card tilt-card">
+          <div class="workflow-step">01</div>
+          <h3>Select</h3>
+          <p>Choose strong clips and narrative hooks from raw footage.</p>
+        </div>
+        <div class="workflow-card tilt-card">
+          <div class="workflow-step">02</div>
+          <h3>Structure</h3>
+          <p>Build visual story arcs and pacing tailored for retention.</p>
+        </div>
+        <div class="workflow-card tilt-card">
+          <div class="workflow-step">03</div>
+          <h3>Polish</h3>
+          <p>Sync trending audio, add dynamic auto-captions, visual effects, and color tuning.</p>
+        </div>
+        <div class="workflow-card tilt-card">
+          <div class="workflow-step">04</div>
+          <h3>Publish</h3>
+          <p>Export and format specifically for social media performance.</p>
+        </div>
+      </div>
+    </section>
 
     <!-- PR Executive Fit -->
     <section id="pr-fit" class="section-alt">
@@ -566,29 +728,29 @@
         </div>
 
         <div class="fit-grid">
-          <div class="fit-card">
+          <div class="fit-card tilt-card">
             <h3>01. Social Media Execution</h3>
             <p>Deep understanding of content presentation and audience consumption patterns on platforms like Instagram.</p>
           </div>
-          <div class="fit-card">
+          <div class="fit-card tilt-card">
             <h3>02. Visual Communication</h3>
             <p>Proven capability in translating abstract ideas into engaging visual and narrative content.</p>
           </div>
-          <div class="fit-card">
+          <div class="fit-card tilt-card">
             <h3>03. End-to-End Content Creation</h3>
             <p>Hands-on proficiency shooting, editing, and packaging content for events and campaign opportunities.</p>
           </div>
-          <div class="fit-card">
+          <div class="fit-card tilt-card">
             <h3>04. Data-Driven Engagement</h3>
             <p>Utilizing metrics like reach, shares, and saves to evaluate and refine content effectiveness.</p>
           </div>
-          <div class="fit-card">
+          <div class="fit-card tilt-card">
             <h3>05. AI Model & Prompt Engineering Expertise</h3>
             <p>Deep working knowledge of current AI tools and prompt engineering techniques to supercharge ideation, scriptwriting, visual generation, and campaign workflows.</p>
           </div>
         </div>
 
-        <div class="quote-box">
+        <div class="quote-box tilt-card">
           <blockquote>
             “My goal is to use creativity and modern tools to communicate the right message to the right audience.”
           </blockquote>
@@ -606,5 +768,48 @@
     </div>
   </footer>
 
+  <!-- Interactivity Script (3D Tilt Effect + Mobile Menu) -->
+  <script>
+    // Mobile Drawer Navigation Toggle
+    const menuToggle = id => document.getElementById(id);
+    const toggleBtn = menuToggle('menuToggle');
+    const drawer = menuToggle('mobileDrawer');
+    const drawerLinks = document.querySelectorAll('.drawer-link');
+
+    toggleBtn.addEventListener('click', () => {
+      toggleBtn.classList.toggle('active');
+      drawer.classList.toggle('open');
+    });
+
+    drawerLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        toggleBtn.classList.remove('active');
+        drawer.classList.remove('open');
+      });
+    });
+
+    // Interactive 3D Perspective Tilt Effect for Desktop/Touch
+    const cards = document.querySelectorAll('.tilt-card');
+
+    cards.forEach(card => {
+      card.addEventListener('mousemove', e => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        
+        const rotateX = ((y - centerY) / centerY) * -8;
+        const rotateY = ((x - centerX) / centerX) * 8;
+
+        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(5px)`;
+      });
+
+      card.addEventListener('mouseleave', () => {
+        card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateZ(0px)';
+      });
+    });
+  </script>
 </body>
 </html>
