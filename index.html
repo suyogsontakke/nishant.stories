@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nishant Gaikwad | PR Executive & Content Creator Portfolio</title>
+  <style>
+    /* CSS Variables & Global Reset */
+    :root {
+      --bg-dark: #09090b;
+      --card-bg: #18181b;
+      --card-border: #27272a;
+      --accent: #f43f5e;
+      --accent-gradient: linear-gradient(135deg, #f43f5e, #a855f7);
+      --text-main: #f4f4f5;
+      --text-muted: #a1a1aa;
+      --font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      font-family: var(--font-family);
+      line-height: 1.6;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    /* Navbar */
+    header {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: rgba(9, 9, 11, 0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--card-border);
+      z-index: 1000;
+    }
+
+    nav {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 1.5rem;
+    }
+
+    .logo {
+      font-weight: 800;
+      font-size: 1.1rem;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    .logo span {
+      color: var(--accent);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1.5rem;
+      list-style: none;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    .nav-links a:hover {
+      color: var(--text-main);
+    }
+
+    .btn-ig {
+      background: var(--accent-gradient);
+      padding: 0.5rem 1rem;
+      border-radius: 9999px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      transition: opacity 0.2s;
+    }
+
+    .btn-ig:hover {
+      opacity: 0.9;
+    }
+
+    /* Layout Container */
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    /* Hero Section */
+    .hero {
+      padding: 8rem 0 5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 3rem;
+    }
+
+    @media (min-width: 768px) {
+      .hero {
+        flex-direction: row;
+        align-items: center;
+      }
+    }
+
+    .hero-content {
+      flex: 1;
+    }
+
+    .badge {
+      display: inline-block;
+      background: rgba(244, 63, 94, 0.1);
+      border: 1px solid rgba(244, 63, 94, 0.3);
+      color: var(--accent);
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 0.25rem 0.75rem;
+      border-radius: 9999px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 1.25rem;
+    }
+
+    .hero-content h1 {
+      font-size: 2.5rem;
+      font-weight: 800;
+      line-height: 1.15;
+      margin-bottom: 1rem;
+    }
+
+    @media (min-width: 768px) {
+      .hero-content h1 { font-size: 3.5rem; }
+    }
+
+    .gradient-text {
+      background: var(--accent-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-content p {
+      color: var(--text-muted);
+      font-size: 1rem;
+      margin-bottom: 2rem;
+      max-width: 550px;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      border-top: 1px solid var(--card-border);
+      padding-top: 1.5rem;
+    }
+
+    .stat-number {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .stat-label {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    .hero-image-wrapper {
+      width: 100%;
+      max-width: 320px;
+      margin: 0 auto;
+    }
+
+    .hero-image {
+      width: 100%;
+      height: 380px;
+      object-fit: cover;
+      border-radius: 1rem;
+      border: 1px solid var(--card-border);
+      background: var(--card-bg);
+    }
+
+    /* Section Header */
+    .section-header {
+      margin-bottom: 2.5rem;
+    }
+
+    .section-subtitle {
+      color: var(--accent);
+      font-family: monospace;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+    }
+
+    .section-title {
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-top: 0.25rem;
+    }
+
+    /* Section Wrappers */
+    section {
+      padding: 5rem 0;
+    }
+
+    .section-alt {
+      background: rgba(24, 24, 27, 0.4);
+      border-top: 1px solid rgba(39, 39, 42, 0.6);
+      border-bottom: 1px solid rgba(39, 39, 42, 0.6);
+    }
+
+    /* Video Projects Section */
+    .video-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+
+    @media (min-width: 768px) {
+      .video-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    .video-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 0.75rem;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .video-container {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 9 / 16;
+      background: #000;
+    }
+
+    .video-container video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .video-details {
+      padding: 1rem;
+      background: var(--card-bg);
+    }
+
+    .video-title {
+      font-size: 0.95rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .video-metrics {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      border-top: 1px solid var(--card-border);
+      padding-top: 0.5rem;
+      margin-top: 0.5rem;
+    }
+
+    .metric-value {
+      color: var(--text-main);
+      font-weight: 600;
+    }
+
+    /* Workflow Cards */
+    .workflow-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+
+    @media (min-width: 640px) {
+      .workflow-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (min-width: 1024px) {
+      .workflow-grid { grid-template-columns: repeat(4, 1fr); }
+    }
+
+    .workflow-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      padding: 1.5rem;
+      border-radius: 0.75rem;
+    }
+
+    .workflow-step {
+      font-family: monospace;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 0.5rem;
+    }
+
+    .workflow-card h3 {
+      font-size: 1.1rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .workflow-card p {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    /* PR Fit Cards */
+    .fit-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+
+    @media (min-width: 768px) {
+      .fit-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    .fit-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      padding: 1.5rem;
+      border-radius: 0.75rem;
+    }
+
+    .fit-card h3 {
+      font-size: 1.1rem;
+      color: var(--text-main);
+      margin-bottom: 0.5rem;
+    }
+
+    .fit-card p {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    /* Quote Banner */
+    .quote-box {
+      margin-top: 3rem;
+      background: linear-gradient(135deg, rgba(244, 63, 94, 0.1), rgba(24, 24, 27, 0.9));
+      border: 1px solid rgba(244, 63, 94, 0.2);
+      padding: 2.5rem 1.5rem;
+      border-radius: 1rem;
+      text-align: center;
+    }
+
+    .quote-box blockquote {
+      font-size: 1.1rem;
+      font-style: italic;
+      color: var(--text-main);
+    }
+
+    .quote-author {
+      margin-top: 1rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--card-border);
+      padding: 3rem 0;
+      text-align: center;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    footer p span {
+      color: var(--text-main);
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <header>
+    <nav>
+      <div class="logo">Nishant<span>.Gaikwad</span></div>
+      <ul class="nav-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#videos">Videos</a></li>
+        <li><a href="#workflow">Workflow</a></li>
+        <li><a href="#pr-fit">PR Fit</a></li>
+      </ul>
+      <a href="https://instagram.com/nishant_stories" target="_blank" class="btn-ig">@nishant_stories</a>
+    </nav>
+  </header>
+
+  <main>
+    <!-- Hero Section -->
+    <section id="about" class="container hero">
+      <div class="hero-content">
+        <span class="badge">PR Executive • Portfolio</span>
+        <h1>
+          Content Creator, <br>
+          <span class="gradient-text">Video Editor & Photographer</span>
+        </h1>
+        <p>
+          "Photographer, Vlogger & Videographer. Capturing your vision..!"[cite: 1] BCA Student with practical experience in viral short-form content, video production, and audience engagement[cite: 1].
+        </p>
+
+        <div class="stats-grid">
+          <div>
+            <div class="stat-number">1.1M+</div>
+            <div class="stat-label">30-Day Views[cite: 1]</div>
+          </div>
+          <div>
+            <div class="stat-number">2,390</div>
+            <div class="stat-label">Followers[cite: 1]</div>
+          </div>
+          <div>
+            <div class="stat-number">3.67M+</div>
+            <div class="stat-label">Peak Reel Views[cite: 1]</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-image-wrapper">
+        <img src="https://instagram.fnag10-1.fna.fbcdn.net/v/t51.82787-15/684845699_18061685186705204_4466235375142625002_n.heic?stp=dst-jpg_e35_tt6&_nc_cat=102&ig_cache_key=Mzg4Njk5ODUwMzQ1NzcxODU0NQ%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkNBUk9VU0VMX0lURU0ueHBpZHMuMTQ0MC5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=gNeqIhdi63gQ7kNvwGeSb-L&_nc_oc=Adp3412LdrPyeODmCI1wFnXNK_w-OD7vGpsFoGoRxjT5tgIb7SMXLO6CxU5gdtZOy4gevqFjyr1MzRnzboDApwAI&_nc_ad=z-m&_nc_cid=1252&_nc_zt=23&_nc_ht=instagram.fnag10-1.fna&_nc_gid=zLOrYJz2CxBvmSnWFkrXUQ&_nc_ss=7a22e&oh=00_AQG4X508X35X-uwUFz1CH4X0e3U2fnAlYOBNd0Te9pWghQ&oe=6A7F4F99" alt="Nishant Gaikwad" class="hero-image">
+      </div>
+    </section>
+
+    <!-- Video Projects Section -->
+    <section id="videos" class="section-alt">
+      <div class="container">
+        <div class="section-header">
+          <p class="section-subtitle">Showreel</p>
+          <h2 class="section-title">Project Videos & Reels</h2>
+        </div>
+
+        <div class="video-grid">
+          <!-- Video Card 1 -->
+          <div class="video-card">
+            <div class="video-container">
+              <video controls poster="https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?w=800&q=80">
+                <source src="videos/video1.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+              </video>
+            </div>
+            <div class="video-details">
+              <div class="video-title">The Bloodline I Belong..![cite: 1]</div>
+              <div class="video-metrics">
+                <span>Views: <span class="metric-value">3,672,437</span>[cite: 1]</span>
+                <span>Likes: <span class="metric-value">301K</span>[cite: 1]</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Video Card 2 -->
+          <div class="video-card">
+            <div class="video-container">
+              <video controls poster="https://images.unsplash.com/photo-1518173946687-a4c8a383392e?w=800&q=80">
+                <source src="videos/video2.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+              </video>
+            </div>
+            <div class="video-details">
+              <div class="video-title">Bappa Birthday Coming Soon..[cite: 1]</div>
+              <div class="video-metrics">
+                <span>Views: <span class="metric-value">1,456,475</span>[cite: 1]</span>
+                <span>Likes: <span class="metric-value">223K</span>[cite: 1]</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Video Card 3 -->
+          <div class="video-card">
+            <div class="video-container">
+              <video controls poster="https://images.unsplash.com/photo-1536240478700-b869070f9279?w=800&q=80">
+                <source src="videos/video3.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+              </video>
+            </div>
+            <div class="video-details">
+              <div class="video-title">Creative Shoot / Editorial Reel[cite: 1]</div>
+              <div class="video-metrics">
+                <span>Shares: <span class="metric-value">12K</span>[cite: 1]</span>
+                <span>Saves: <span class="metric-value">4.9K</span>[cite: 1]</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Workflow Section -->
+    <section id="workflow" class="container">
+      <div class="section-header">
+        <p class="section-subtitle">Editing Process</p>
+        <h2 class="section-title">DaVinci Resolve Workflow</h2>
+      </div>
+
+      <div class="workflow-grid">
+        <div class="workflow-card">
+          <div class="workflow-step">01</div>
+          <h3>Select</h3>
+          <p>Choose strong clips and narrative hooks from raw footage[cite: 1].</p>
+        </div>
+        <div class="workflow-card">
+          <div class="workflow-step">02</div>
+          <h3>Structure</h3>
+          <p>Build visual story arcs and pacing tailored for retention[cite: 1].</p>
+        </div>
+        <div class="workflow-card">
+          <div class="workflow-step">03</div>
+          <h3>Polish</h3>
+          <p>Fine-tune audio sync, add transitions, and color grade[cite: 1].</p>
+        </div>
+        <div class="workflow-card">
+          <div class="workflow-step">04</div>
+          <h3>Publish</h3>
+          <p>Export and format specifically for social media performance[cite: 1].</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- PR Executive Fit -->
+    <section id="pr-fit" class="section-alt">
+      <div class="container">
+        <div class="section-header">
+          <p class="section-subtitle">Value Proposition</p>
+          <h2 class="section-title">Why I Fit a PR Executive Role</h2>
+        </div>
+
+        <div class="fit-grid">
+          <div class="fit-card">
+            <h3>01. Social Media Execution</h3>
+            <p>Deep understanding of content presentation and audience consumption patterns on platforms like Instagram[cite: 1].</p>
+          </div>
+          <div class="fit-card">
+            <h3>02. Visual Communication</h3>
+            <p>Proven capability in translating abstract ideas into engaging visual and narrative content[cite: 1].</p>
+          </div>
+          <div class="fit-card">
+            <h3>03. End-to-End Content Creation</h3>
+            <p>Hands-on proficiency shooting, editing, and packaging content for events and campaign opportunities[cite: 1].</p>
+          </div>
+          <div class="fit-card">
+            <h3>04. Data-Driven Engagement</h3>
+            <p>Utilizing metrics like reach, shares, and saves to evaluate and refine content effectiveness[cite: 1].</p>
+          </div>
+        </div>
+
+        <div class="quote-box">
+          <blockquote>
+            “My goal is to use creativity to communicate the right message to the right audience.”[cite: 1]
+          </blockquote>
+          <div class="quote-author">— Nishant Gaikwad[cite: 1]</div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <p>Ready to learn, create & contribute[cite: 1].</p>
+      <p style="margin-top: 0.5rem;"><span>Nishant Gaikwad</span>[cite: 1] • <span>@nishant_stories</span>[cite: 1]</p>
+    </div>
+  </footer>
+
+</body>
+</html>
