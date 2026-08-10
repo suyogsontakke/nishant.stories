@@ -333,6 +333,24 @@
       color: var(--text-muted);
     }
 
+    /* Workflow Media Container Styles */
+.workflow-media-container {
+  width: 100%;
+  margin-bottom: 2rem;
+  border-radius: 0.75rem;
+  overflow: hidden;
+  border: 1px solid var(--card-border);
+  background: var(--card-bg);
+}
+
+.workflow-image {
+  width: 100%;
+  height: auto;
+  max-height: 450px;
+  object-fit: cover;
+  display: block;
+}
+
     /* PR Fit Cards */
     .fit-grid {
       display: grid;
@@ -482,7 +500,7 @@
           <div class="video-card">
             <div class="video-container-portrait">
               <video autoplay muted loop playsinline controls poster="...">
-  <source src="video/video1.mp4" type="video/mp4">
+  <source src="video/video2.mp4" type="video/mp4">
   Your browser does not support the video tag.
 </video>
             </div>
@@ -499,35 +517,45 @@
     </section>
 
     <!-- Workflow Section -->
-    <section id="workflow" class="container">
-      <div class="section-header">
-        <p class="section-subtitle">Editing Process</p>
-        <h2 class="section-title">CapCut Workflow</h2>
-      </div>
+<section id="workflow" class="container">
+  <div class="section-header">
+    <p class="section-subtitle">Editing Process</p>
+    <h2 class="section-title">CapCut Workflow</h2>
+  </div>
 
-      <div class="workflow-grid">
-        <div class="workflow-card">
-          <div class="workflow-step">01</div>
-          <h3>Select</h3>
-          <p>Choose strong clips and narrative hooks from raw footage.</p>
-        </div>
-        <div class="workflow-card">
-          <div class="workflow-step">02</div>
-          <h3>Structure</h3>
-          <p>Build visual story arcs and pacing tailored for retention.</p>
-        </div>
-        <div class="workflow-card">
-          <div class="workflow-step">03</div>
-          <h3>Polish</h3>
-          <p>Sync trending audio, add dynamic auto-captions, visual effects, and color tuning.</p>
-        </div>
-        <div class="workflow-card">
-          <div class="workflow-step">04</div>
-          <h3>Publish</h3>
-          <p>Export and format specifically for social media performance.</p>
-        </div>
-      </div>
-    </section>
+  <!-- CapCut Photo Showcase Container -->
+  <div class="workflow-media-container">
+    <img 
+      src="https://i.postimg.cc/63BYqSZf/Picture1.png" 
+      alt="CapCut Editing Interface Showcase" 
+      class="workflow-image"
+    >
+  </div>
+
+  <!-- Workflow Steps Grid -->
+  <div class="workflow-grid">
+    <div class="workflow-card">
+      <div class="workflow-step">01</div>
+      <h3>Select</h3>
+      <p>Choose strong clips and narrative hooks from raw footage.</p>
+    </div>
+    <div class="workflow-card">
+      <div class="workflow-step">02</div>
+      <h3>Structure</h3>
+      <p>Build visual story arcs and pacing tailored for retention.</p>
+    </div>
+    <div class="workflow-card">
+      <div class="workflow-step">03</div>
+      <h3>Polish</h3>
+      <p>Sync trending audio, add dynamic auto-captions, visual effects, and color tuning.</p>
+    </div>
+    <div class="workflow-card">
+      <div class="workflow-step">04</div>
+      <h3>Publish</h3>
+      <p>Export and format specifically for social media performance.</p>
+    </div>
+  </div>
+</section>
 
     <!-- PR Executive Fit -->
     <section id="pr-fit" class="section-alt">
