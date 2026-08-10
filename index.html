@@ -223,16 +223,16 @@
       border-bottom: 1px solid rgba(39, 39, 42, 0.6);
     }
 
-    /* Video Projects Section */
+    /* Video Projects Section - 2 Columns */
     .video-grid {
       display: grid;
       grid-template-columns: 1fr;
-      gap: 1.5rem;
+      gap: 2rem;
     }
 
     @media (min-width: 768px) {
       .video-grid {
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(2, 1fr);
       }
     }
 
@@ -245,14 +245,23 @@
       flex-direction: column;
     }
 
-    .video-container {
+    /* Landscape Container for Video 1 */
+    .video-container-landscape {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: #000;
+    }
+
+    /* Portrait Container for Video 2 */
+    .video-container-portrait {
       position: relative;
       width: 100%;
       aspect-ratio: 9 / 16;
       background: #000;
     }
 
-    .video-container video {
+    .video-card video {
       width: 100%;
       height: 100%;
       object-fit: cover;
@@ -452,53 +461,36 @@
         </div>
 
         <div class="video-grid">
-          <!-- Video Card 1 -->
+          <!-- Video Card 1 (Landscape) -->
           <div class="video-card">
-            <div class="video-container">
-              <video controls poster="https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?w=800&q=80">
+            <div class="video-container-landscape">
+              <video controls poster="https://i.postimg.cc/zBkGNLwY/Image-43899.jpg">
                 <source src="video/video1.mp4" type="video/mp4">
                 Your browser does not support the video tag.
               </video>
             </div>
             <div class="video-details">
-              <div class="video-title">The Bloodline I Belong..!</div>
+              <div class="video-title">Where moments turn into cinema🎬</div>
               <div class="video-metrics">
-                <span>Views: <span class="metric-value">3,672,437</span></span>
-                <span>Likes: <span class="metric-value">301K</span></span>
+                <span>Views: <span class="metric-value">2,993</span></span>
+                <span>Likes: <span class="metric-value">302</span></span>
               </div>
             </div>
           </div>
 
-          <!-- Video Card 2 -->
+          <!-- Video Card 2 (Portrait) -->
           <div class="video-card">
-            <div class="video-container">
-              <video controls poster="https://images.unsplash.com/photo-1518173946687-a4c8a383392e?w=800&q=80">
+            <div class="video-container-portrait">
+              <video controls poster="https://i.postimg.cc/MGSwG6KN/Image-53542.jpg">
                 <source src="video/video2.mp4" type="video/mp4">
                 Your browser does not support the video tag.
               </video>
             </div>
             <div class="video-details">
-              <div class="video-title">Bappa Birthday Coming Soon..</div>
+              <div class="video-title">The Bloodline I Belong..! </div>
               <div class="video-metrics">
-                <span>Views: <span class="metric-value">1,456,475</span></span>
-                <span>Likes: <span class="metric-value">223K</span></span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Video Card 3 -->
-          <div class="video-card">
-            <div class="video-container">
-              <video controls poster="https://images.unsplash.com/photo-1536240478700-b869070f9279?w=800&q=80">
-                <source src="video/video3.mp4" type="video/mp4">
-                Your browser does not support the video tag.
-              </video>
-            </div>
-            <div class="video-details">
-              <div class="video-title">Creative Shoot / Editorial Reel</div>
-              <div class="video-metrics">
-                <span>Shares: <span class="metric-value">12K</span></span>
-                <span>Saves: <span class="metric-value">4.9K</span></span>
+                <span>Views: <span class="metric-value">3,672,437</span></span>
+                <span>Likes: <span class="metric-value">301K</span></span>
               </div>
             </div>
           </div>
